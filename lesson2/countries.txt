@@ -1,0 +1,47 @@
+CREATE DATABASE IF NOT EXISTS `geodata`; 
+
+USE `geodata`;
+
+CREATE TABLE IF NOT EXISTS `_countries`(
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`title` VARCHAR(50) NOT NULL
+);
+
+CREATE INDEX `title_idx` ON `_countries`(`title`);
+
+CREATE TABLE IF NOT EXISTS `_regions`(
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`country_id` INT NOT NULL);
+
+ALTER TABLE `_regions`
+ADD CONSTRAINT `country_key` FOREIGN KEY (`country_id`)
+REFERENCES `_countries`(`id`)
+ON	UPDATE CASCADE
+ON DELETE RESTRICT;
+
+ALTER TABLE `_regions`
+ADD COLUMN `title` VARCHAR(150) NOT NULL 
+
+CREATE INDEX `title_idx` ON `_regions`(`title`);
+
+CREATE TABLE IF NOT EXISTS `_cities`(
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`country_id` INT NOT NULL,
+`important` TINYINT(1) NOT NULL,
+`region_id` INT NOT NULL,
+`title` VARCHAR(150) NOT NULL
+);
+
+ALTER TABLE `_cities`
+ADD CONSTRAINT `city_ country_key` FOREIGN KEY (`country_id`)
+REFERENCES `_countries`(`id`)
+ON	UPDATE CASCADE
+ON DELETE RESTRICT;
+
+ALTER TABLE `_cities`
+ADD CONSTRAINT `region_key` FOREIGN KEY (`region_id`)
+REFERENCES `_regions`(`id`)
+ON	UPDATE CASCADE
+ON DELETE RESTRICT;
+
+CREATE INDEX `title_idx` ON `_cities`(`title`);
