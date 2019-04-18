@@ -1,0 +1,33 @@
+USE geodata;
+
+INSERT INTO `_countries` (`title`)
+VALUES
+('Россия'),
+('Украина'),
+('Беларусь'),
+('Таджикистан');
+
+INSERT INTO `_regions` (`country_id`,`title`)
+VALUES
+('1','Московская'),
+('2','Киевская'),
+('3','Минская'),
+('4','Душанбе');
+
+INSERT INTO `_cities` (`country_id`,`region_id`,`important`,`title`)
+VALUES
+('1','1','1','Москва'),
+('1','1','2','Красногорск'),
+('1','1','2','Балашиха'),
+('2','2','1','Киев'),
+('3','3','1','Минск'),
+('4','4','1','Душанбе');
+
+SELECT _cities.title, _regions.title, _countries.title 
+FROM _cities, _regions, _countries 
+WHERE _cities.region_id = _regions.id AND _regions.country_id  = _countries.id 
+Order by _countries.id;
+
+SELECT _cities.title
+FROM _cities
+WHERE _cities.region_id = 1; 
